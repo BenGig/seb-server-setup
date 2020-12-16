@@ -1,0 +1,52 @@
+namespace: seb-server-prod
+nameSuffix: -prod
+
+replicas:
+  - name: seb-server
+    count: 3
+
+images:
+  - name: bengig/seb-server-webservice
+    newTag: stable
+
+resources:
+  # Get the base configuration
+  - github.com/BenGig/seb-server-setup/kubernetes?ref=via-dockerhub
+  
+  # Add an ingress
+  - ingress.yml
+
+  # Add a secret with application variables
+  - app-env.json
+  # - app-env.yml  # if prepared with SealedSecret as shown in the README
+
+  # Same with DB connection variables
+  - db-env.json
+
+patchesStrategicMerge:
+  # Add/replace some variables 
+  - |-
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: seb-server
+    spec:
+      template:
+        spec:
+          containers:
+            - name: seb-server
+              env:
+                - name: SECRET
+                  valueFrom:
+                    secretRef:
+                      name: app-env
+                - name: DB_HOST
+                  value: seb-db
+                - name: DB_USER
+                  valueFrom:
+                    secretRef:
+                      name: db-env
+                - name: DB_PASSWORD
+                  valueFrom:
+                    secretRef:
+                      name: db-env
