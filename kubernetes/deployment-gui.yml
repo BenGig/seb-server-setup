@@ -1,0 +1,35 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: seb-server-gui
+  labels:
+    app: seb-server
+spec:
+  minReadySeconds: 10
+  selector:
+    matchLabels:
+      app: seb-server-gui
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: seb-server-gui
+    spec:
+      volumes:
+        - name: application-properties
+          configMap:
+            name: application-gui-prod-properties
+        - name: logback-xml
+          configMap:
+            name: logback-gui-prod-xml
+      containers:
+        - name: seb-gui
+          image: bengig/seb-server-gui:latest
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: application-properties
+              mountPath: /sebserver/config/spring/application-prod.properties
+            - name: logback-xml
+              mountPath: /sebserver/config/spring/logback-prod.xml

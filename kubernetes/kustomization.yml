@@ -1,0 +1,20 @@
+resources:
+  - namespace.yml
+  - deployment-webservice.yml
+  - service-webservice.yml
+  - deployment-gui.yml
+  - service-gui.yml
+
+configMapGenerator:
+  - name: application-webservice-prod-properties
+    files:
+      - config/application-webservice-prod.properties
+  - name: logback-webservice-prod-xml
+    files:
+      - config/logback-webservice-prod.xml
+  - name: application-gui-prod-properties
+    files:
+      - config/application-gui-prod.properties
+  - name: logback-gui-prod-xml
+    files:
+      - config/logback-gui-prod.xml
