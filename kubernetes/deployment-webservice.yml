@@ -25,7 +25,7 @@ spec:
             name: application-webservice-prod-properties
       containers:
         - name: seb-server
-          image: bengig/seb-server-webservice:latest
+          image: bengig/seb-server:latest
           ports:
             - containerPort: 8080
           volumeMounts:
@@ -33,3 +33,6 @@ spec:
               mountPath: /sebserver/config/spring/application-prod.properties
             - name: logback-xml
               mountPath: /sebserver/config/spring/logback-prod.xml
+          env:
+            - name: SEBSERVER_MODE
+              value: webservice
