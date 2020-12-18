@@ -38,15 +38,18 @@ patchesStrategicMerge:
               env:
                 - name: SECRET
                   valueFrom:
-                    secretRef:
-                      name: app-env
+                    secretKeyRef:
+                      name: app-env-prod
+                      key: SECRET
                 - name: DB_HOST
                   value: seb-db
                 - name: DB_USER
                   valueFrom:
-                    secretRef:
-                      name: db-env
+                    secretKeyRef:
+                      name: db-env-prod
+                      key: DB_USER
                 - name: DB_PASSWORD
                   valueFrom:
-                    secretRef:
-                      name: db-env
+                    secretKeyRef:
+                      name: db-env-prod
+                      key: DB_PASSWORD
