@@ -31,8 +31,10 @@ spec:
           volumeMounts:
             - name: application-properties
               mountPath: /sebserver/config/spring/application-prod.properties
+              subPath: application-prod.properties
             - name: logback-xml
               mountPath: /sebserver/config/spring/logback-prod.xml
+              subPath: logback-prod.xml
           env:
             - name: SEBSERVER_MODE
               value: gui
