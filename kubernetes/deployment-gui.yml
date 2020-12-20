@@ -20,15 +20,9 @@ spec:
         - name: application-properties
           configMap:
             name: application-gui-prod-properties
-            items:
-              - key: application-prod.properties
-                path: application-prod.properties
         - name: logback-xml
           configMap:
             name: logback-gui-prod-xml
-            items:
-              - key: logback-prod.xml
-                path: logback-prod.xml
       containers:
         - name: seb-gui
           image: bengig/seb-server:latest
